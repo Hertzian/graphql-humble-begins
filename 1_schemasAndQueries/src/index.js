@@ -14,6 +14,8 @@ const typeDefs = `
     gpa: Float
     me: User!
     post: Post!
+    greeting(name: String, position: String): String!
+    add(a: Float!, b: Float!): Float!
   }
 
   type User {
@@ -29,6 +31,7 @@ const typeDefs = `
     body: String!
     published: Boolean!
   }
+
 `
 
 //resolvers
@@ -55,6 +58,15 @@ const resolvers = {
         body: 'this is the body',
         published: true
       }
+    },
+    greeting: (parent, args, ctx, info) => {
+      if (args.name && args.position)
+        return `Hi ${args.name}, how are you!, and I am ${args.position}`
+      return `Hi nobody`
+    },
+    add: (parent, args, ctx, info) => {
+      const { a, b } = args
+      if (a && b) return a + b
     }
   }
 }
